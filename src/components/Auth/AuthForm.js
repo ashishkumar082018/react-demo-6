@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "./AuthForm.module.css";
+import AuthContext from "../../store/auth-context";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -41,14 +45,11 @@ const AuthForm = () => {
       }
 
       const data = await response.json();
-      // Log the response data after signup
-      if (!isLogin) {
-        console.log("Signup successful, user data:", data);
-      } else {
-        console.log("Login successful, user data:", data);
-      }
+      console.log(data);
+      authCtx.login(data.idToken);
 
       alert(isLogin ? "Login successful" : "Signup successful");
+      navigate("/");
     } catch (err) {
       alert(err.message);
     } finally {
