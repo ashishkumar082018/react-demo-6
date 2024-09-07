@@ -10,7 +10,7 @@ const MainNavigation = () => {
 
   const logoutHandler = () => {
     authCtx.logout();
-    navigate("/auth"); // Redirect to the login page after logout
+    navigate("/auth");
   };
 
   return (
